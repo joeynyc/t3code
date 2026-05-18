@@ -1,16 +1,46 @@
 # T3 Code
 
-T3 Code is a minimal web GUI for coding agents (currently Codex, Claude, and OpenCode, more coming soon).
+T3 Code is a minimal web GUI for coding agents (currently Codex, Claude, OpenCode, and Hermes, more coming soon).
 
 ## Installation
 
 > [!WARNING]
-> T3 Code currently supports Codex, Claude, and OpenCode.
+> T3 Code currently supports Codex, Claude, OpenCode, and Hermes.
 > Install and authenticate at least one provider before use:
 >
 > - Codex: install [Codex CLI](https://developers.openai.com/codex/cli) and run `codex login`
 > - Claude: install [Claude Code](https://claude.com/product/claude-code) and run `claude auth login`
 > - OpenCode: install [OpenCode](https://opencode.ai) and run `opencode auth login`
+> - Hermes: install [Hermes Agent](https://github.com/nousresearch/hermes-agent) and run `hermes model`
+
+Hermes setup notes: [docs/providers/hermes.md](./docs/providers/hermes.md)
+
+## Hermes Agent support
+
+T3 Code can run [Hermes Agent](https://github.com/nousresearch/hermes-agent) as a local ACP
+provider. Enable Hermes from **Settings -> Providers**, point the binary path at your local
+`hermes` executable, then select Hermes from the chat model picker.
+
+![Hermes themed chat surface](./docs/assets/hermes-chat-theme.jpg)
+
+Recommended macOS setup:
+
+```bash
+git clone https://github.com/nousresearch/hermes-agent.git ~/Projects/hermes-agent
+cd ~/Projects/hermes-agent
+python3 -m venv venv
+./venv/bin/pip install -e .
+mkdir -p ~/.local/bin
+ln -sf ~/Projects/hermes-agent/venv/bin/hermes ~/.local/bin/hermes
+~/.local/bin/hermes model
+```
+
+T3 Code auto-detects common Hermes paths such as `~/.local/bin/hermes`,
+`~/Projects/hermes-agent/venv/bin/hermes`, `/opt/homebrew/bin/hermes`, and `/usr/local/bin/hermes`.
+Hermes manages authentication through its own CLI and local config; T3 Code starts `hermes acp`
+only when a Hermes conversation needs it.
+
+Full setup and troubleshooting guide: [docs/providers/hermes.md](./docs/providers/hermes.md)
 
 ### Run without installing
 
